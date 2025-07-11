@@ -131,6 +131,7 @@ product.CapacityDTO, product.ProductCategoriesDTO, product.ProductMakersDTO, pro
 						<input type="text" name="stockQuantity"></input>
 						<label>その他記載事項：</label>
 						<input type="text" name="otherInfo"></input>
+						<input type="hidden" name="stockAddFlag"  value="0">
 						<input type="hidden" name="ac"  value="<%= hs.getAttribute("ac")%>">
 						
 						<button type="submit" name="btnSubmit">登録</button>

@@ -9,6 +9,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+import product.MachineProductIncetancesDAO;
+import product.MachineProductIncetancesDTO;
 import user.UserDataBeans;
 
 /**
@@ -50,11 +52,30 @@ public class StockInsertResult extends HttpServlet {
             sdb.setProductId(request.getParameter("productId"));
             sdb.setCapacityId(request.getParameter("capacityId"));
             sdb.setColorId(request.getParameter("colorId"));
+            sdb.setStockAddFlag(request.getParameter("stockAddFlag"));
             sdb.setUserName(udb.getUserName());
             //DB操作用ジャバビーンズにセット
             StockDTO sd = new StockDTO();
             sdb.SD2DTOMapping(sd);
+            //同じ在庫が在庫テーブルにある場合、探してきて、そこの個数にプラス＋機械製品単体テーブルには追加フラグ立ててプラス、
+            //ない場合は在庫新規追加＋機械製品単体テーブルに、追加フラグ0のまま追加
+            //→在庫登録画面からは新規在庫登録。追加は検索して追加の画面からする。ようにする。＝画面からの単体データは追加フラグ0
+            //stocks（在庫）テーブルに新規登録
             StockDAO.getInstance().insert(sd);
+           
+            //機械製品単体テーブルに在庫分登録
+            //登録した在庫検索→在庫DTOに入れる→その中の在庫数分だけ回して単体テーブルに入れる
+            MachineProductIncetancesDTO mpiDTO = new MachineProductIncetancesDTO();
+            mpiDTO.setProductId(sd.getProductId());
+            mpiDTO.setCapacityId(sd.getCapacityId());
+            mpiDTO.setColorId(sd.getColorId());
+            mpiDTO.setStockId(sd.getStockId());
+            mpiDTO.setStockAddFlag(sdb.getStockAddFlag());
+            mpiDTO.setUserName(sdb.getUserName());
+            //在庫登録と同じユーザーで登録
+            MachineProductIncetancesDAO.getInstance().insert(mpiDTO, sd);
+            
+           
             
             
             request.getRequestDispatcher("stock/stockInsertResult.jsp").forward(request, response);

@@ -18,7 +18,7 @@ public class StockDTO {
 	private int colorId;
 	private String userName;
 	
-	   //在庫idセット・取得
+	   	//在庫idセット・取得
 		public int getStockId() {
 			return stockId;
 		}

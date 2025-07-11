@@ -62,6 +62,7 @@ public class StockInsertConfirm extends HttpServlet {
             sdb.setModelName(request.getParameter("modelName"));
             sdb.setStockQuantity(request.getParameter("stockQuantity"));
             sdb.setOtherInfo(request.getParameter("otherInfo"));
+            sdb.setStockAddFlag(request.getParameter("stockAddFlag"));
             
             
             //画面からのリクエストで表示用データ検索、セット

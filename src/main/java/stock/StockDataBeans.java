@@ -20,6 +20,7 @@ public class StockDataBeans {
 	private int categoryId;
 	private String categoryName;
 	private String userName;
+	private int stockAddFlag;
 	//配列クラスを作って、それをリストに入れるのが、各データを配列で渡す方法っぽい
 	//private List capacityList; 
 	
@@ -205,6 +206,15 @@ public class StockDataBeans {
   		
   	    public void setUserName(String userName) {
   	        this.userName = userName;
+  	    }
+  	    
+  	    //在庫追加フラグセット・取得
+  		public int getStockAddFlag() {
+  			return stockAddFlag;
+  		}
+  		
+  	    public void setStockAddFlag(String stockAddFlag) {
+  	        this.stockAddFlag = Integer.parseInt(stockAddFlag);
   	    }
   	    
 

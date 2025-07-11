@@ -40,6 +40,7 @@ System.out.print("登録画面に戻る際のユーザーパス"+ udb.getUserPas
 		<input type="hidden" name="productId" value="<%=sdb.getProductId() %>">
 		<input type="hidden" name="capacityId" value="<%=sdb.getCapacityId() %>">
 		<input type="hidden" name="colorId" value="<%=sdb.getColorId() %>">
+		<input type="hidden" name="stockAddFlag" value="<%= sdb.getStockAddFlag()%>">
 		<input type="hidden" name="ac"  value="<%= hs.getAttribute("ac")%>">
 		
 		<button type="submit" name="btnSubmit">登録</button>

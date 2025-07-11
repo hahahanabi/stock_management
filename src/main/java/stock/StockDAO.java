@@ -2,7 +2,9 @@ package stock;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 
 import base.DBManager;
@@ -22,9 +24,10 @@ public class StockDAO {
     public void insert(StockDTO sd) throws SQLException{
         Connection con = null;
         PreparedStatement st = null;
+        ResultSet rs = null; 
         try{
             con = DBManager.getConnection();
-            st = con.prepareStatement("INSERT INTO stocks(stock_quantity, purchase_unit_price, sale_unit_price, other_info, product_id, capacity_id, color_id, created_at, updated_at, created_user, updated_user) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
+            st = con.prepareStatement("INSERT INTO stocks(stock_quantity, purchase_unit_price, sale_unit_price, other_info, product_id, capacity_id, color_id, created_at, updated_at, created_user, updated_user) VALUES(?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             st.setInt(1, sd.getStockQuantity());
             st.setInt(2, sd.getPurchaseUnitPrice());
             st.setInt(3, sd.getSaleUnitPrice());
@@ -36,8 +39,17 @@ public class StockDAO {
             st.setTimestamp(9, new Timestamp(System.currentTimeMillis()));
             st.setString(10, sd.getUserName());
             st.setString(11, sd.getUserName());
-            st.executeUpdate();
+           int insertedRow = st.executeUpdate();
             System.out.println("stock insert completed");
+            //登録した在庫データのidをジャバビーンズにセット
+           if (insertedRow > 0) {
+        	   rs = st.getGeneratedKeys();
+        	   if (rs.next()) {
+        		   int stockId = rs.getInt(1);
+        		   sd.setStockId(stockId);
+        	   }
+           }
+            
         }catch(SQLException e){
             System.out.println(e.getMessage());
             throw new SQLException(e);
