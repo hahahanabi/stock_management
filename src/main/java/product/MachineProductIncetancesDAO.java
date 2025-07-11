@@ -36,11 +36,11 @@ public class MachineProductIncetancesDAO {
         List<CodeMastersDTO> codeList = CodeMastersDAO.getInstance().getSearchCodeByCodeType("stock_status_type_code");
         
         //商品コード作成用データ
-        String categoryFirstThree = pcd.getCategoryName().substring(0,3);
-        String ProductNameFirstThree = pd.getModelName().substring(0,3);
+        String categoryCodeFirstThree = pcd.getCategoryTypeCode().substring(0,3);
+        String ProductCodeFirstThree = pd.getProductCode().substring(0,3);
         int capacity = cd.getCapacity();
-        String colorFirstThree = cod.getColorCode().substring(0,3);
-        String productUnitCode = categoryFirstThree + ProductNameFirstThree + capacity + colorFirstThree;
+        String colorCodeFirstThree = cod.getColorCode().substring(0,3);
+        String productUnitCode = categoryCodeFirstThree + ProductCodeFirstThree + capacity + colorCodeFirstThree;
         
         //在庫ステータス取得
         int stockStatusTypeCodeId = 0;

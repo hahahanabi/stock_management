@@ -75,8 +75,6 @@ public class StockInsertResult extends HttpServlet {
             //在庫登録と同じユーザーで登録
             MachineProductIncetancesDAO.getInstance().insert(mpiDTO, sd);
             
-           
-            
             
             request.getRequestDispatcher("stock/stockInsertResult.jsp").forward(request, response);
         }catch(Exception e){
