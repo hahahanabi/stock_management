@@ -6,6 +6,7 @@
 <%@ page import="helper.Helper"%>
 <%@ page import="organization.OrganizationDTO" %>  
 <%@ page import="user.UserDataBeans" %>
+<%@ page import="code_masters.CodeMastersDTO" %>
  <%
     Helper h = Helper.getInstance();
  	HttpSession hs = request.getSession();
@@ -16,20 +17,35 @@
 	        reinput = true;
 	        udb = (UserDataBeans)hs.getAttribute("udb");
 	    }
+	List<CodeMastersDTO> organizationTypeCodes = (List<CodeMastersDTO>)request.getAttribute("organizationTypeCodes");
     List<OrganizationDTO> allOrganizations = (List<OrganizationDTO>)request.getAttribute("allOrganizations");
     List<OrganizationDTO> allDepartments = new ArrayList<>();
     List<OrganizationDTO> allStores = new ArrayList<>();
-    //部署データ飲みの配列作成
+    //部署データのみの配列作成
     for (OrganizationDTO organization : allOrganizations) {
-    	String type = organization.getOrganizationTypeCode();
-    	if ("head_office".equals(type) || "department".equals(type)) {
+    	int typeId = organization.getOrganizationTypeCodeId();
+    	String typeCode = null;
+    	for(CodeMastersDTO organizationTypeCode : organizationTypeCodes) {
+    		if (typeId == organizationTypeCode.getCodeMasterId()) {
+    			typeCode = organizationTypeCode.getCode();
+    			break;
+    		}
+    	}
+    	if ("head_office".equals(typeCode) || "department".equals(typeCode)) {
     		allDepartments.add(organization);
     	}
     }
 	//課or店舗を格納
     for (OrganizationDTO organization : allOrganizations) {
-    	String type = organization.getOrganizationTypeCode();
-    	if ("store".equals(type)) {
+    	int typeId = organization.getOrganizationTypeCodeId();
+    	String typeCode = null;
+    	for(CodeMastersDTO organizationTypeCode : organizationTypeCodes) {
+    		if (typeId == organizationTypeCode.getCodeMasterId()) {
+    			typeCode = organizationTypeCode.getCode();
+    			break;
+    		}
+    	}
+    	if ("store".equals(typeCode)) {
     		allStores.add(organization);
     	}
     }
@@ -50,6 +66,7 @@
 		<label>所属：</label>
 		<select name="organization" id="organization" onchange="selectDepartment()">
 			<%for (OrganizationDTO department : allDepartments) {
+				//System.out.prinit("部署データ" + department.getOrganizationName());
 				String selected = "";
 				if (reinput && department.getOrganizationId() == udb.getOrganizationId()) {
 					selected = "selected";
@@ -80,7 +97,7 @@
   // allStoresをJavaScriptの配列として用意
   const allStores = [
     <% for (OrganizationDTO store : allStores) { %>
-      { id: <%= store.getOrganizationId() %>, name: '<%= store.getOrganizationName() %>', type: '<%= store.getOrganizationTypeCode() %>' },
+      { id: <%= store.getOrganizationId() %>, name: '<%= store.getOrganizationName() %>', type: 'store' },
     <% } %>
   ];
   //確認画面から戻ってきた際にデータ使用するためにreinput変数とudbをそれぞれjavaScriptに

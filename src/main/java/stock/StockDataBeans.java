@@ -1,5 +1,18 @@
 package stock;
 
+import java.sql.SQLException;
+
+import product.CapacityDAO;
+import product.CapacityDTO;
+import product.ColorDAO;
+import product.ColorDTO;
+import product.ProductCategoriesDAO;
+import product.ProductCategoriesDTO;
+import product.ProductDAO;
+import product.ProductDTO;
+import product.ProductMakersDAO;
+import product.ProductMakersDTO;
+
 public class StockDataBeans {
 	
 	private int stockId;
@@ -132,8 +145,8 @@ public class StockDataBeans {
  			return capacity;
  		}
  		
- 	    public void setCapacity(int capacity) {
- 	        this.capacity = capacity;
+ 	    public void setCapacity(String capacity) {
+ 	        this.capacity = Integer.parseInt(capacity);
  	    }
  	    
  	    //製品容量タイプセット・取得
@@ -230,6 +243,36 @@ public class StockDataBeans {
   	        sd.setColorId(this.colorId);
   	        sd.setUserName(this.userName);
   	    }
+  	    
+  	    //検索結果表示用にこのジャバビーンズにセット
+  	    public void SDTOTOSDBMapping(StockDTO sd) throws SQLException{
+  	    	int productId = sd.getProductId();
+  	    	int capacityId = sd.getCapacityId();
+  	    	int colorId = sd.getColorId();
+  	    	ProductDTO proDTO = ProductDAO.getInstance().getSearchProductById(productId);
+  	    	CapacityDTO capDTO = CapacityDAO.getInstance().getSearchCapacityById(capacityId);
+  	    	ColorDTO colDTO = ColorDAO.getInstance().getSearchColorById(colorId);
+  	    	ProductMakersDTO makDTO = ProductMakersDAO.getInstance().getSearchProductMakerById(proDTO.getProductMakerId());
+  	    	ProductCategoriesDTO procDTO= ProductCategoriesDAO.getInstance().getSearchProductCategoryById(proDTO.getProductCategoryId());
+  	    	
+  	    	this.setStockId(String.valueOf(sd.getStockId()));
+  	    	this.setProductName(proDTO.getProductName());
+  	    	this.setStockQuantity(String.valueOf(sd.getStockQuantity()));
+  	    	this.setPurchaseUnitPrice(String.valueOf(sd.getPurchaseUnitPrice()));
+  	    	this.setSaleUnitPrice(String.valueOf(sd.getSaleUnitPrice()));
+  	    	this.setModelName(proDTO.getModelName());
+  	    	this.setOtherInfo(sd.getOtherInfo());
+  	    	this.setProductId(String.valueOf(productId));
+  	    	this.setCapacityId(String.valueOf(capacityId));
+  	    	this.setCapacity(String.valueOf(capDTO.getCapacity()));
+  	    	this.setCapacityType(capDTO.getCapacityType());
+  	    	this.setColorId(String.valueOf(colorId));
+  	    	this.setColorName(colDTO.getColorName());
+  	    	this.setMakerId(String.valueOf(proDTO.getProductMakerId()));
+  	    	this.setMakerName(makDTO.getMakerName());
+  	    	this.setCategoryId(String.valueOf(proDTO.getProductCategoryId()));
+  	    	this.setCategoryName(procDTO.getCategoryName());
+	    }
   	    
 //  	    public List getCapacityList() {
 //  	    	return capacityList;

@@ -11,7 +11,7 @@ public class OrganizationDTO {
 	private int organizationId;
 	private String organizationName;
 	private int organizationParentId;
-	private String organizationTypeCode;
+	private int organizationTypeCodeId;
 	
 	//組織idセット・取得
 	public int getOrganizationId() {
@@ -41,12 +41,12 @@ public class OrganizationDTO {
 	}
 	
 	 //組織タイプセット・取得
-    public String getOrganizationTypeCode() {
-  		return organizationTypeCode;
+    public int getOrganizationTypeCodeId() {
+  		return organizationTypeCodeId;
   	}
   	
-	public void setOrganizationTypeCode(String organizationTypeCode) {
-      this.organizationTypeCode = organizationTypeCode;
+	public void setOrganizationTypeCodeId(int organizationTypeCodeId) {
+      this.organizationTypeCodeId = organizationTypeCodeId;
 	}
 
 }

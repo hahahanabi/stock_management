@@ -21,10 +21,22 @@ System.out.print("登録画面に戻る際のユーザーパス"+ udb.getUserPas
 	<p>色：<%=sdb.getColorName() %></p>
 	<p>カテゴリー：<%=sdb.getCategoryName() %></p>
 	<p>メーカー：<%=sdb.getMakerName() %></p>
-	<p>初回仕入（在庫）数：<%=sdb.getStockQuantity() %></p>
+	<p>初回仕入（在庫）数：
+	<%
+	out.print(sdb.getStockQuantity());
+	if (sdb.getStockQuantity() == 0) {
+		out.print(" (未入荷)");
+	}
+	%></p>
 	<p>型番：<%=sdb.getModelName() %></p>
 	<p>仕入単価：<%=sdb.getPurchaseUnitPrice() %></p>
-	<p>販売価格：<%=sdb.getSaleUnitPrice() %></p>
+	<p>販売価格：
+	<%
+	out.print(sdb.getSaleUnitPrice());
+	if (sdb.getSaleUnitPrice() == 0) {
+		out.print(" (未確定)");
+	}
+	%></p>
 	<p>その他特記事項：<%=sdb.getOtherInfo() %></p>
   	<form action="StockInsert" method="POST">
         <input type="submit" name="no" value="キャンセル">

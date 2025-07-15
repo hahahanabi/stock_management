@@ -10,6 +10,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+import code_masters.CodeMastersDAO;
+import code_masters.CodeMastersDTO;
 import organization.OrganizationDAO;
 import organization.OrganizationDTO;
 
@@ -42,8 +44,10 @@ public class UserInsert extends HttpServlet {
 	        
 	        //登録画面に組織をセレクトで選択できるようにデータ取得
             List<OrganizationDTO> allOrganizations = OrganizationDAO.getInstance().getAllOrganizations();
+            List<CodeMastersDTO> organizationTypeCodes = CodeMastersDAO.getInstance().getSearchCodeByCodeType("organization_type_code");
             
             request.setAttribute("allOrganizations", allOrganizations);
+            request.setAttribute("organizationTypeCodes", organizationTypeCodes);
 	        request.getRequestDispatcher("/userInsert.jsp").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();

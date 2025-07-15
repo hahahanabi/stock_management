@@ -45,7 +45,7 @@ public class OrganizationDAO {
             	resultOd.setOrganizationId(rs.getInt(1));
             	resultOd.setOrganizationName(rs.getString(2));
             	resultOd.setOrganizationParentId(rs.getInt(3));
-            	resultOd.setOrganizationTypeCode(rs.getString(4));
+            	resultOd.setOrganizationTypeCodeId(rs.getInt(4));
             	
             	resultOdList.add(resultOd);
 //            UserDataDTO resultUd = new UserDataDTO();
@@ -95,7 +95,7 @@ public class OrganizationDAO {
             resultOd.setOrganizationId(rs.getInt(1));
             resultOd.setOrganizationName(rs.getString(2));
             resultOd.setOrganizationParentId(rs.getInt(3));
-            resultOd.setOrganizationTypeCode(rs.getString(4));
+            resultOd.setOrganizationTypeCodeId(rs.getInt(4));
             
             System.out.println("searchByOrganizationId completed");
 

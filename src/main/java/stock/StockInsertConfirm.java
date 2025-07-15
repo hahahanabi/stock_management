@@ -51,16 +51,22 @@ public class StockInsertConfirm extends HttpServlet {
             }
             
             StockDataBeans sdb = new StockDataBeans();
+            String stockQuantity = request.getParameter("stockQuantity");
+            String saleUnitPrice = request.getParameter("saleUnitPrice");
             //画面からのリクエストセット
             sdb.setProductId(request.getParameter("productId"));
             sdb.setCapacityId(request.getParameter("capacityId"));
             sdb.setPurchaseUnitPrice(request.getParameter("purchaseUnitPrice"));
             sdb.setCategoryId(request.getParameter("categoryId"));
             sdb.setMakerId(request.getParameter("makerId"));
-            sdb.setSaleUnitPrice(request.getParameter("SaleUnitPrice"));
+            if (!saleUnitPrice.equals("")) {
+            	sdb.setSaleUnitPrice(saleUnitPrice);
+            }
             sdb.setColorId(request.getParameter("colorId"));
             sdb.setModelName(request.getParameter("modelName"));
-            sdb.setStockQuantity(request.getParameter("stockQuantity"));
+            if (!stockQuantity.equals("")) {
+            	sdb.setStockQuantity(stockQuantity);
+            }
             sdb.setOtherInfo(request.getParameter("otherInfo"));
             sdb.setStockAddFlag(request.getParameter("stockAddFlag"));
             
@@ -69,7 +75,7 @@ public class StockInsertConfirm extends HttpServlet {
             ProductDTO pd = ProductDAO.getInstance().getSearchProductById(sdb.getProductId());
             sdb.setProductName(pd.getProductName());
             CapacityDTO cd = CapacityDAO.getInstance().getSearchCapacityById(sdb.getCapacityId());
-            sdb.setCapacity(cd.getCapacity());
+            sdb.setCapacity(String.valueOf(cd.getCapacity()));
             sdb.setCapacityType(String.valueOf(cd.getCapacityType()));
             ProductCategoriesDTO proCatDTO = ProductCategoriesDAO.getInstance().getSearchProductCategoryById(sdb.getCategoryId());
             sdb.setCategoryName(proCatDTO.getCategoryName());
