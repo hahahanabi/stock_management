@@ -11,7 +11,7 @@
 <br>
 <br>
 <br>
-<a href="UserInsert">
+<a href="${pageContext.request.contextPath}/UserInsert">
 	<button>ユーザー登録</button>
 </a>
 <a href="Login">
