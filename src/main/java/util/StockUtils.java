@@ -42,7 +42,7 @@ public class StockUtils {
         String password = request.getParameter("password");
         
         UserDataBeans udb = new UserDataBeans();
-        System.out.print("画面からのメアど" + email);
+
         udb.setUserEmail(email);
         udb.setUserPassword(password);
         UserDataDTO udd = UserDataDAO.getInstance().search(udb);
