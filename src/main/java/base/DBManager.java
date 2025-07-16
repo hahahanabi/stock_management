@@ -23,9 +23,9 @@ public class DBManager {
 
             if ("production".equals(env)) {
                 // Render（railway）用：環境変数から取得
-                url = System.getenv("jdbc:mysql://myapp-db.c6hs8mccoy1b.us-east-1.rds.amazonaws.com:3306/stock_management_pro?useSSL=true&requireSSL=true");
-                user = System.getenv("mydb_user");
-                pass = System.getenv("teipen0717");
+            	 url = System.getenv("JDBC_URL");
+                 user = System.getenv("DB_USER");
+                 pass = System.getenv("DB_PASS");
             } else {
                 // ローカル開発用
                 url = "jdbc:mysql://localhost:8889/stock_management";
